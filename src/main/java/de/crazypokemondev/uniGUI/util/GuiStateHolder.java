@@ -8,13 +8,10 @@ import java.util.List;
 public class GuiStateHolder<TState> {
     @Getter
     private final TState state;
-    @Getter
-    private final Class<TState> stateType;
     private final List<Runnable> updateHandlers = new ArrayList<>();
 
-    public GuiStateHolder(TState state, Class<TState> stateType) {
+    public GuiStateHolder(TState state) {
         this.state = state;
-        this.stateType = stateType;
     }
 
     public void registerUpdateHandler(Runnable updateHandler) {
