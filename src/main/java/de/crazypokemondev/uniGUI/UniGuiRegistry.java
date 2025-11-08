@@ -1,6 +1,6 @@
 package de.crazypokemondev.uniGUI;
 
-import de.crazypokemondev.uniGUI.api.Gui;
+import de.crazypokemondev.uniGUI.api.GuiFactory;
 import de.crazypokemondev.uniGUI.api.GuiRegistry;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

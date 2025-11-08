@@ -1,12 +1,10 @@
 package de.crazypokemondev.uniGUI.api;
 
-import de.crazypokemondev.uniGUI.GuiFactory;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Callable;
 
 public interface GuiRegistry {
     /**

@@ -1,6 +1,7 @@
 package de.crazypokemondev.uniGUI;
 
 import de.crazypokemondev.uniGUI.api.Gui;
+import de.crazypokemondev.uniGUI.api.GuiFactory;
 import de.crazypokemondev.uniGUI.api.GuiHandler;
 import de.crazypokemondev.uniGUI.api.GuiRegistry;
 import de.crazypokemondev.uniGUI.api.error.GuiNotSupportedException;

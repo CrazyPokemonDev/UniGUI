@@ -1,12 +1,9 @@
-package de.crazypokemondev.uniGUI;
+package de.crazypokemondev.uniGUI.api;
 
-import de.crazypokemondev.uniGUI.api.Gui;
 import de.crazypokemondev.uniGUI.util.GuiStateHolder;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public interface GuiFactory extends Comparable<GuiFactory> {
     /**

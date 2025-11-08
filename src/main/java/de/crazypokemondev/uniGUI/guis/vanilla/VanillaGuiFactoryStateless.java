@@ -7,15 +7,24 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public class VanillaGuiFactoryStateless extends VanillaGuiFactory {
-    private final Supplier<Gui> supplier;
+    private final Gui gui;
 
-    public VanillaGuiFactoryStateless(String id, Supplier<Gui> supplier) {
+    /**
+     * Creates a new factory for a stateless vanilla GUI
+     *
+     * @param id  The identifier for your specific GUI. Recommended pattern is <code>pluginid:guiname</code>.
+     *            If you have multiple implementations for the same GUI (e.g. one vanilla implementation and one custom
+     *            implementation) they need to share the same identifier. The implementation with the highest priority available
+     *            to the client will be used.
+     * @param gui The Gui instance to return. Since this GUI is stateless, the same instance can be returned for every player.
+     */
+    public VanillaGuiFactoryStateless(String id, Gui gui) {
         super(id);
-        this.supplier = supplier;
+        this.gui = gui;
     }
 
     @Override
     public @NotNull Gui createGui(GuiStateHolder<?> stateHolder) {
-        return supplier.get();
+        return gui;
     }
 }
