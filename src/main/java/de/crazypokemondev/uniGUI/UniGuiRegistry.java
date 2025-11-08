@@ -8,36 +8,36 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 
 public class UniGuiRegistry implements GuiRegistry {
-    private final Map<String, PriorityQueue<Gui>> registry = new HashMap<>();
+    private final Map<String, PriorityQueue<GuiFactory>> registry = new HashMap<>();
 
     @Override
-    public void register(@NotNull Gui gui) {
-        if (!registry.containsKey(gui.getId())) {
-            registry.put(gui.getId(), new PriorityQueue<>());
+    public void register(@NotNull GuiFactory factory) {
+        if (!registry.containsKey(factory.getId())) {
+            registry.put(factory.getId(), new PriorityQueue<>());
         }
-        registry.get(gui.getId()).add(gui);
+        registry.get(factory.getId()).add(factory);
     }
 
     @Override
-    public boolean unregister(@NotNull Gui gui) {
-        if (registry.containsKey(gui.getId())) {
-            return registry.get(gui.getId()).remove(gui);
+    public boolean unregister(@NotNull GuiFactory factory) {
+        if (registry.containsKey(factory.getId())) {
+            return registry.get(factory.getId()).remove(factory);
         } else return false;
     }
 
     @Override
-    public Optional<Gui> getGui(@NotNull String guiId, @NotNull Player player) {
-        PriorityQueue<Gui> guis = registry.getOrDefault(guiId, null);
+    public Optional<GuiFactory> getGui(@NotNull String guiId, @NotNull Player player) {
+        PriorityQueue<GuiFactory> guis = registry.getOrDefault(guiId, null);
         if (guis != null) {
-            for (Gui g : guis) {
-                if (g.isSupportedByPlayer(player)) return Optional.of(g);
+            for (GuiFactory f : guis) {
+                if (f.isSupportedByPlayer(player)) return Optional.of(f);
             }
         }
         return Optional.empty();
     }
 
     @Override
-    public List<Gui> getAllGuis(@NotNull String guiId) {
+    public List<GuiFactory> getAllGuis(@NotNull String guiId) {
         if (registry.containsKey(guiId)) return registry.get(guiId).stream().toList();
         else return Collections.emptyList();
     }

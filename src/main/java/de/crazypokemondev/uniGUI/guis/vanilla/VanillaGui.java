@@ -13,16 +13,6 @@ public abstract class VanillaGui implements Gui {
     }
 
     @Override
-    public int getPriority() {
-        return 0;
-    }
-
-    @Override
-    public boolean isSupportedByPlayer(Player player) {
-        return true;
-    }
-
-    @Override
     public void close(Player player) {
         player.closeInventory();
     }

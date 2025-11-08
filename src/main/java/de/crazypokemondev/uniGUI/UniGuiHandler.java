@@ -18,8 +18,9 @@ public class UniGuiHandler implements GuiHandler {
 
     @Override
     public Gui openGui(@NotNull Player player, @NotNull String guiId) throws GuiNotSupportedException {
-        Optional<Gui> optional = registry.getGui(guiId, player);
-        Gui gui = optional.orElseThrow(() -> new GuiNotSupportedException(player, guiId));
+        Optional<GuiFactory> optional = registry.getGui(guiId, player);
+        GuiFactory factory = optional.orElseThrow(() -> new GuiNotSupportedException(player, guiId));
+        Gui gui = factory.createGui();
         gui.open(player);
         return gui;
     }
