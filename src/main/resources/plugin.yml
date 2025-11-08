@@ -1,0 +1,6 @@
+name: UniGUI
+version: '0.1'
+main: de.crazypokemondev.uniGUI.UniGUI
+api-version: '1.21'
+depend:
+  - GuiLib
