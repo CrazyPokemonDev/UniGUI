@@ -3,17 +3,12 @@ package de.crazypokemondev.uniGUI.guis.vanilla;
 import de.crazypokemondev.uniGUI.UniGuiFactory;
 import de.crazypokemondev.uniGUI.api.Gui;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Supplier;
-
-public class VanillaGuiFactory<TGui extends Gui> extends UniGuiFactory {
+public abstract class VanillaGuiFactory extends UniGuiFactory {
     private final String id;
-    private final Supplier<TGui> supplier;
 
-    public VanillaGuiFactory(String id, Supplier<TGui> supplier) {
+    public VanillaGuiFactory(String id) {
         this.id = id;
-        this.supplier = supplier;
     }
 
     @Override
@@ -29,10 +24,5 @@ public class VanillaGuiFactory<TGui extends Gui> extends UniGuiFactory {
     @Override
     public boolean isSupportedByPlayer(Player player) {
         return true;
-    }
-
-    @Override
-    public @NotNull Gui createGui() {
-        return supplier.get();
     }
 }

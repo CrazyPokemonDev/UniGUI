@@ -1,8 +1,10 @@
 package de.crazypokemondev.uniGUI;
 
 import de.crazypokemondev.uniGUI.api.Gui;
+import de.crazypokemondev.uniGUI.util.GuiStateHolder;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -35,7 +37,7 @@ public interface GuiFactory extends Comparable<GuiFactory> {
     boolean isSupportedByPlayer(Player player);
 
     @NotNull
-    Gui createGui();
+    Gui createGui(@Nullable GuiStateHolder<?> stateHolder);
 
     @Override
     default int compareTo(@NotNull GuiFactory o) {
