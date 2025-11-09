@@ -23,7 +23,7 @@ public class UniGuiHandler implements GuiHandler {
     public Gui openGui(@NotNull Player player, @NotNull String guiId, @Nullable GuiStateHolder<?> stateHolder) throws GuiNotSupportedException {
         Optional<GuiFactory> optional = registry.getGui(guiId, player);
         GuiFactory factory = optional.orElseThrow(() -> new GuiNotSupportedException(player, guiId));
-        Gui gui = factory.createGui(stateHolder);
+        Gui gui = factory.createGui(player, stateHolder);
         gui.open(player);
         return gui;
     }

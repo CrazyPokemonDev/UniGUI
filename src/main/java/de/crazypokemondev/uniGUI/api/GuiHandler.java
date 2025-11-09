@@ -17,5 +17,5 @@ public interface GuiHandler {
      * @return the implementation of the GUI opened for the player
      * @throws GuiNotSupportedException if the player's client does not support any implementation of the specified GUI
      */
-    Gui openGui(@NotNull Player player, @NotNull String guiId, @NotNull GuiStateHolder<?> stateHolder) throws GuiNotSupportedException;
+    Gui openGui(@NotNull Player player, @NotNull String guiId, @Nullable GuiStateHolder<?> stateHolder) throws GuiNotSupportedException;
 }

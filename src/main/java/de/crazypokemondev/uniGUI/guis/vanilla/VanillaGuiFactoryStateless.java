@@ -2,9 +2,8 @@ package de.crazypokemondev.uniGUI.guis.vanilla;
 
 import de.crazypokemondev.uniGUI.api.Gui;
 import de.crazypokemondev.uniGUI.util.GuiStateHolder;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Supplier;
 
 public class VanillaGuiFactoryStateless extends VanillaGuiFactory {
     private final Gui gui;
@@ -24,7 +23,7 @@ public class VanillaGuiFactoryStateless extends VanillaGuiFactory {
     }
 
     @Override
-    public @NotNull Gui createGui(GuiStateHolder<?> stateHolder) {
+    public @NotNull Gui createGui(Player player, GuiStateHolder<?> stateHolder) {
         return gui;
     }
 }
