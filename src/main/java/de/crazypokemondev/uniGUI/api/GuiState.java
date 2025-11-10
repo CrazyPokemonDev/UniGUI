@@ -1,9 +1,14 @@
 package de.crazypokemondev.uniGUI.api;
 
+import de.crazypokemondev.uniGUI.UniGUI;
+import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitScheduler;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public interface GuiState {
+    BukkitScheduler scheduler = Bukkit.getScheduler();
     List<Runnable> updateHandlers = new CopyOnWriteArrayList<>();
 
     default void registerUpdateHandler(Runnable updateHandler) {
@@ -16,7 +21,7 @@ public interface GuiState {
 
     default void notifyStateChanged() {
         for (Runnable handler : updateHandlers) {
-            handler.run();
+            scheduler.runTask(UniGUI.INSTANCE, handler);
         }
     }
 }
