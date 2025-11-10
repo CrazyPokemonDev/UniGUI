@@ -1,6 +1,5 @@
 package de.crazypokemondev.uniGUI.api;
 
-import de.crazypokemondev.uniGUI.util.GuiStateHolder;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,12 +36,12 @@ public interface GuiFactory extends Comparable<GuiFactory> {
      * Should return an instance of your GUI for the given player and state.
      * Depending on your implementation, this might be the same instance for each player or a new instance each time.
      *
-     * @param player      The player to create the GUI instance for.
-     * @param stateHolder The state holder, or <code>null</code> if the GUI is stateless.
+     * @param player The player to create the GUI instance for.
+     * @param state  The initial state, or <code>null</code> if the GUI is stateless.
      * @return a Gui instance
      */
     @NotNull
-    Gui createGui(Player player, @Nullable GuiStateHolder<?> stateHolder);
+    Gui createGui(Player player, @Nullable GuiState state);
 
     @Override
     default int compareTo(@NotNull GuiFactory o) {

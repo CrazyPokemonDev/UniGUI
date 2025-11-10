@@ -1,7 +1,7 @@
 package de.crazypokemondev.uniGUI.guis.vanilla;
 
 import de.crazypokemondev.uniGUI.api.Gui;
-import de.crazypokemondev.uniGUI.util.GuiStateHolder;
+import de.crazypokemondev.uniGUI.api.GuiState;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.BiFunction;
 
 public class VanillaGuiFactoryStateful extends VanillaGuiFactory {
-    private final BiFunction<Player, GuiStateHolder<?>, Gui> supplier;
+    private final BiFunction<Player, GuiState, Gui> supplier;
 
     /**
      * Creates a new factory for a stateless vanilla GUI
@@ -19,16 +19,16 @@ public class VanillaGuiFactoryStateful extends VanillaGuiFactory {
      *                 implementation) they need to share the same identifier. The implementation with the highest priority available
      *                 to the client will be used.
      * @param supplier A supplier method that will return a new instance of the GUI for the given player,
-     *                 referencing the GuiStateHolder it receives.
+     *                 referencing the GuiState it receives.
      *                 This can be the same state holder for multiple GUI instances.
      */
-    public VanillaGuiFactoryStateful(String id, BiFunction<Player, GuiStateHolder<?>, Gui> supplier) {
+    public VanillaGuiFactoryStateful(String id, BiFunction<Player, GuiState, Gui> supplier) {
         super(id);
         this.supplier = supplier;
     }
 
     @Override
-    public @NotNull Gui createGui(Player player, @Nullable GuiStateHolder<?> stateHolder) {
-        return supplier.apply(player, stateHolder);
+    public @NotNull Gui createGui(Player player, @Nullable GuiState state) {
+        return supplier.apply(player, state);
     }
 }
