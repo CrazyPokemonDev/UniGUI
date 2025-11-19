@@ -1,57 +1,86 @@
 plugins {
-    id 'java'
-    id("xyz.jpenilla.run-paper") version "2.3.1"
-    id("io.freefair.lombok") version "9.0.0"
+    id 'dev.architectury.loom' version '1.11-SNAPSHOT' apply false
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'com.gradleup.shadow' version '8.3.6' apply false
+    id 'io.freefair.lombok' version "9.0.0" apply false
 }
 
-group = 'de.crazypokemondev'
-version = '0.1'
+architectury {
+    minecraft = project.minecraft_version
+}
 
-repositories {
-    mavenCentral()
-    maven {
-        name = "papermc-repo"
-        url = "https://repo.papermc.io/repository/maven-public/"
+allprojects {
+    group = rootProject.maven_group
+    version = rootProject.mod_version
+}
+
+subprojects {
+    apply plugin: 'maven-publish'
+    apply plugin: 'architectury-plugin'
+    apply plugin: 'io.freefair.lombok'
+    apply plugin: 'com.gradleup.shadow'
+
+    repositories {
+        // Add repositories to retrieve artifacts from in here.
+        // You should only use this when depending on other mods because
+        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
+        // for more information about repositories.
     }
-    maven { url = "https://jitpack.io" }
-}
 
-dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
-}
-
-tasks {
-    runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("1.21.10")
+    tasks.withType(JavaCompile).configureEach {
+        it.options.release = 21
     }
-}
 
-def targetJavaVersion = 21
-java {
-    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-    }
-}
+    if (!project.hasProperty('skiploom')) {
+        apply plugin: 'dev.architectury.loom'
 
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+        base {
+            // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
+            archivesName = "$rootProject.archives_name-$project.name"
+        }
 
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
-        options.release.set(targetJavaVersion)
-    }
-}
+        loom {
+            silentMojangMappingsLicense()
+        }
 
-processResources {
-    def props = [version: version]
-    inputs.properties props
-    filteringCharset 'UTF-8'
-    filesMatching('plugin.yml') {
-        expand props
+        dependencies {
+            minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
+            mappings loom.officialMojangMappings()
+            if (project.name != 'api') {
+                implementation project(":api")
+                if (project.name != 'common') {
+                    include project(":api")
+                }
+            }
+        }
+
+        java {
+            // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+            // if it is present.
+            // If you remove this line, sources will not be generated.
+            withSourcesJar()
+
+            sourceCompatibility = JavaVersion.VERSION_21
+            targetCompatibility = JavaVersion.VERSION_21
+        }
+
+        // Configure Maven publishing.
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    artifactId = base.archivesName.get()
+                    from components.java
+                }
+            }
+
+            // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+            repositories {
+                // Add repositories to publish to here.
+                // Notice: This block does NOT have the same function as the block in the top level.
+                // The repositories here will be used for publishing your artifact, not for
+                // retrieving dependencies.
+            }
+        }
     }
 }

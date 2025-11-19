@@ -1,0 +1,9 @@
+name: UniGUI
+version: '${version}'
+main: de.crazypokemondev.unigui.UniGuiPaper
+description: Universal GUI library for Paper, combines support for both Vanilla and modded clients.
+api-version: '${minecraft_version}'
+authors: [ Olfi01 ]
+website: https://github.com/Olfi01/UniGUI
+depend:
+  - GuiLib
