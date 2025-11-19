@@ -47,7 +47,12 @@ subprojects {
         dependencies {
             minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
             mappings loom.officialMojangMappings()
-            if (project.name != 'api') implementation project(":api")
+            if (project.name != 'api') {
+                implementation project(":api")
+                if (project.name != 'common') {
+                    include project(":api")
+                }
+            }
         }
 
         java {
