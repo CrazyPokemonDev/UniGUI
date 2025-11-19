@@ -23,6 +23,10 @@ base {
     archivesName = "$rootProject.archives_name-$project.name"
 }
 
+build {
+    dependsOn shadowJar
+}
+
 tasks {
     runServer {
         // Configure the Minecraft version for our task.
